@@ -12,14 +12,14 @@
 // //    });
 // //    return (
 // //      <form onSubmit={formik.handleSubmit}>
-// //        <label htmlFor="email">Email Address</label>
-// //        <input
-// //          id="email"
-// //          name="email"
-// //          type="email"
-// //          onChange={formik.handleChange}
-// //          value={formik.values.email}
-// //        />
+      //  <label htmlFor="email">Email Address</label>
+      //  <input
+      //    id="email"
+      //    name="email"
+      //    type="email"
+      //    onChange={formik.handleChange}
+      //    value={formik.values.email}
+      //  />
  
 // //        <button type="submit">Submit</button>
 // //      </form>
@@ -67,6 +67,9 @@ const App = () => {
   
   return (
 
+
+    <div>
+
     <form onSubmit={formik.handleSubmit}>
 
     <label htmlFor="firstName">First Name</label>
@@ -92,6 +95,25 @@ const App = () => {
         <div style={{ color: "red" }}>{formik.errors.firstName}</div>
       ) : null}
 
+
+        
+      
+      
+      
+    
+      <label htmlFor="email">Email Address</label>
+       <input
+         id="email"
+         name="email"
+         type="email"
+         onChange={formik.handleChange}
+         value={formik.values.email}
+       />
+   
+        
+
+
+
       <label htmlFor="lastName">Last Name</label>
       <input
         id="lastName"
@@ -104,6 +126,10 @@ const App = () => {
       {formik.touched.lastName && formik.errors.lastName ? (
         <div style={{ color: "red" }}>{formik.errors.lastName}</div>
       ) : null}
+
+
+
+
 
       <label htmlFor="email">Email Address</label>
       <input
@@ -119,7 +145,21 @@ const App = () => {
       ) : null}
 
       <button type="submit">Submit</button>
-    </form>
+    
+    
+    
+    <p s></p>
+    
+    
+    
+    
+    
+    
+    
+      </form>
+
+
+      </div>
   );
 };
 

@@ -1,170 +1,186 @@
- 
-// //  const SignupForm = () => {
-// //    // Pass the useFormik() hook initial form values and a submit function that will
-// //    // be called when the form is submitted
-// //    const formik = useFormik({
-// //      initialValues: {
-// //        email: '',
-// //      },
-// //      onSubmit: values => {
-// //        alert(JSON.stringify(values, null, 2));
-// //      },
-// //    });
-// //    return (
-// //      <form onSubmit={formik.handleSubmit}>
-      //  <label htmlFor="email">Email Address</label>
-      //  <input
-      //    id="email"
-      //    name="email"
-      //    type="email"
-      //    onChange={formik.handleChange}
-      //    value={formik.values.email}
-      //  />
- 
-// //        <button type="submit">Submit</button>
-// //      </form>
-// //    );
-// //  };
+import React, { useEffect, useState, useRef } from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import slugify from "react-slugify";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { Editor } from "@tinymce/tinymce-react";
+import config from "./config";
 
-
-
-
-
-import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-
-const App = () => {
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-    },
-    validationSchema: Yup.object({
-      firstName: Yup.string()
-        .max(15, "Must be 15 characters or less")
-        .required("Required"),
-      lastName: Yup.string()
-        .max(20, "Must be 20 characters or less")
-        .required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
-    }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  return (
-
-
-    <div>
-
-    <form onSubmit={formik.handleSubmit}>
-
-    <label htmlFor="firstName">First Name</label>
-    <input
-      id="firstName"
-      name="firstName"
-      type="text"
-      onChange={formik.handleChange}
-      onBlur={formik.handleBlur}
-      value={formik.values.firstName}
-    />
-
-      <label htmlFor="firstName">First Name</label>
-      <input
-        id="firstName"
-        name="firstName"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.firstName}
-      />
-      {formik.touched.firstName && formik.errors.firstName ? (
-        <div style={{ color: "red" }}>{formik.errors.firstName}</div>
-      ) : null}
-
-
-        
-      
-      
-      
-    
-      <label htmlFor="email">Email Address</label>
-       <input
-         id="email"
-         name="email"
-         type="email"
-         onChange={formik.handleChange}
-         value={formik.values.email}
-       />
-   
-        
-
-
-
-      <label htmlFor="lastName">Last Name</label>
-      <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.lastName}
-      />
-      {formik.touched.lastName && formik.errors.lastName ? (
-        <div style={{ color: "red" }}>{formik.errors.lastName}</div>
-      ) : null}
-
-
-
-
-
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.email}
-      />
-      {formik.touched.email && formik.errors.email ? (
-        <div style={{ color: "red" }}>{formik.errors.email}</div>
-      ) : null}
-
-      <button type="submit">Submit</button>
-    
-    
-    
-    <p s></p>
-    
-    
-    
-    
-    
-    
-    
-      </form>
-
-
-      </div>
-  );
+const defaultValues = {
+  title: "",
+  content: "",
+  address: "",
+  city: "",
+  category: "",
+  postType: "",
 };
 
+export default function MultilineTextFields() {
+  const [value, setValue] = useState(defaultValues);
+  const [slug, setSlug] = useState("");
+  const editorRef = useRef(null);
 
-export default App; 
+  // const handleChange = (event) => {
+  //   setValue(event.target.value);
+  // };
 
+  useEffect(() => {
+    console.log(`${JSON.stringify(value)}`);
 
+    if (value.title === "") return;
+    setSlug(slugify(value.title));
+  }, [value]);
 
+  const handleInputChange = (event) => {
+    const target = event.target;
+    const val = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+    setValue({ ...value, [name]: val });
+  };
+
+  const log = (e) => {
+    if (editorRef.current) {
+      console.log();
+      const contentData = editorRef.current.getContent();
+      const data = { ...value, contentData, slug };
+
+      alert(`${JSON.stringify(data)}`);
+    }
+
+    e.preventDefault();
+  };
+
+  return (
+    <Box
+      component="form"
+      sx={{
+        "& .MuiTextField-root": { m: 1, width: "25ch" },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <h1>Create New Post</h1>
+      <FormControl fullWidth>
+        <div>
+          <TextField
+            id="title"
+            name="title"
+            label="Title"
+            value={value.title}
+            onChange={handleInputChange}
+            style={{ width: "80%" }}
+          />
+          <TextField
+            id="slug"
+            name="slug"
+            label="Slug"
+            placeholder="text-to-other-text"
+            disabled={true}
+            value={slug}
+            variant="standard"
+          />
+          <TextField
+            id="address"
+            name="address"
+            label="Address"
+            multiline
+            rows={4}
+            onChange={handleInputChange}
+            placeholder="13 Elm Street"
+            value={value.address}
+          />
+        </div>
+      </FormControl>
+      <FormControl style={{ width: "20%" }}>
+        <InputLabel id="city-label">City</InputLabel>
+        <Select
+          labelId="city"
+          name="city"
+          value={value.city}
+          label="City"
+          type="select"
+          onChange={handleInputChange}
+        >
+          <MenuItem value={"Atlanta, GA"}>Atlanta, GA</MenuItem>
+          <MenuItem value={"Denver, CO"}>Denver, CO</MenuItem>
+          <MenuItem value={"Dallas, TX"}>Dallas, TX</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl style={{ width: "20%" }}>
+        <InputLabel id="post-type-label">Post Type</InputLabel>
+        <Select
+          labelId="postType"
+          name="postType"
+          value={value.postType}
+          label="Post Type"
+          type="select"
+          onChange={handleInputChange}
+        >
+          <MenuItem value={"Current News"}>Current News</MenuItem>
+          <MenuItem value={"Articles"}>Articles</MenuItem>
+          <MenuItem value={"Restaurants"}>Restaurants</MenuItem>
+          <MenuItem value={"Travel Info"}>Travel Info</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl style={{ width: "20%" }}>
+        <InputLabel id="category-label">Category</InputLabel>
+        <Select
+          labelId="category"
+          name="category"
+          value={value.category}
+          label="Category"
+          type="select"
+          onChange={handleInputChange}
+        >
+          <MenuItem value={"Dessert"}>Dessert</MenuItem>
+          <MenuItem value={"Soul Food"}>Soul Food</MenuItem>
+          <MenuItem value={"Italian"}>Italian</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl style={{ width: "80%" }}>
+        <Editor
+          apiKey={config.APIKEY}
+          onInit={(evt, editor) => (editorRef.current = editor)}
+          initialValue="<p>This is the initial content of the editor.</p>"
+          init={{
+            height: 500,
+            menubar: false,
+            plugins: [
+              "advlist",
+              "autolink",
+              "lists",
+              "link",
+              "image",
+              "charmap",
+              "preview",
+              "anchor",
+              "searchreplace",
+              "visualblocks",
+              "code",
+              "fullscreen",
+              "insertdatetime",
+              "media",
+              "table",
+              "code",
+              "help",
+              "wordcount",
+            ],
+            toolbar:
+              "undo redo | blocks | " +
+              "bold italic forecolor | alignleft aligncenter " +
+              "alignright alignjustify | bullist numlist outdent indent | " +
+              "removeformat | help",
+            content_style:
+              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+          }}
+        />
+        <button onClick={log}>Log editor content</button>
+      </FormControl>
+    </Box>
+  );
+}

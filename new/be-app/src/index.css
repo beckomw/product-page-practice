@@ -13,8 +13,7 @@ code {
 }
 
 
-label {
+label,input {
   display: flex;
-  flex-direction: row;
- 
-}
+  justify-content: flex-start;
+} 

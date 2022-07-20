@@ -72,27 +72,27 @@ const App = () => {
 
     <form onSubmit={formik.handleSubmit}>
 
-    <label htmlFor="firstName">First Name</label>
+    <label htmlFor="City">City</label>
     <input
-      id="firstName"
-      name="firstName"
+      id="city"
+      name="city"
       type="text"
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
-      value={formik.values.firstName}
+      value={formik.values.city}
     />
 
-      <label htmlFor="firstName">First Name</label>
+      <label htmlFor="PostType">Post Type</label>
       <input
-        id="firstName"
-        name="firstName"
+        id="PostType"
+        name="Post Type"
         type="text"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        value={formik.values.firstName}
+        value={formik.values.Post}
       />
-      {formik.touched.firstName && formik.errors.firstName ? (
-        <div style={{ color: "red" }}>{formik.errors.firstName}</div>
+      {formik.touched.PostType && formik.errors.PostType ? (
+        <div style={{ color: "red" }}>{formik.errors.PostType}</div>
       ) : null}
 
 
@@ -101,7 +101,7 @@ const App = () => {
       
       
     
-      <label htmlFor="email">Email Address</label>
+      <label htmlFor="category">Category</label>
        <input
          id="email"
          name="email"
@@ -148,7 +148,7 @@ const App = () => {
     
     
     
-    <p s></p>
+    <p></p>
     
     
     

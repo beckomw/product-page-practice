@@ -13,7 +13,7 @@ code {
 }
 
 
-label,input {
+label {
   display: flex;
   justify-content: flex-start;
 } 

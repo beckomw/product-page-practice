@@ -23,9 +23,9 @@ export default function MultilineTextFields() {
   const [slug, setSlug] = useState("");
   const editorRef = useRef(null);
 
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  // };
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   useEffect(() => {
     console.log(`${JSON.stringify(value)}`);
@@ -38,7 +38,10 @@ export default function MultilineTextFields() {
     const target = event.target;
     const val = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    setValue({ ...value, [name]: val });
+    setValue({
+      ...value,
+      [name]: val,
+    });
   };
 
   const log = (e) => {
@@ -71,7 +74,7 @@ export default function MultilineTextFields() {
             label="Title"
             value={value.title}
             onChange={handleInputChange}
-            style={{ width: "80%" }}
+            style={{ width: "80%", textTransform: "capitalize" }}
           />
           <TextField
             id="slug"
@@ -142,7 +145,7 @@ export default function MultilineTextFields() {
           <MenuItem value={"Italian"}>Italian</MenuItem>
         </Select>
       </FormControl>
-      <FormControl style={{ width: "80%" }}>
+      <FormControl style={{ width: "80%", height: 300 }}>
         <Editor
           apiKey={config.APIKEY}
           onInit={(evt, editor) => (editorRef.current = editor)}
@@ -179,7 +182,7 @@ export default function MultilineTextFields() {
               "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
           }}
         />
-        <button onClick={log}>Log editor content</button>
+        <button onClick={log}>Submit</button>
       </FormControl>
     </Box>
   );

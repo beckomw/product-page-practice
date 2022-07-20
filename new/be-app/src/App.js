@@ -18,27 +18,65 @@ const defaultValues = {
   postType: "",
 };
 
+
+
+// React Hooks 
+// JavaScript Spread Operator 
+// JavaScript Destructuring 
+// Null JavaScript ** 
+// JavaScript Operators 
+// Truthy & Falsey
+// Ternary Operators 
+// useEffect Hook ** 
+// BASH SET ALIAS 
+
+
+
+
+
+
+
+
+
+
+
 export default function MultilineTextFields() {
-  const [value, setValue] = useState(defaultValues);
+  const [value, setValue] = useState(defaultValues);     
   const [slug, setSlug] = useState("");
   const editorRef = useRef(null);
 
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
-
+  
   useEffect(() => {
     console.log(`${JSON.stringify(value)}`);
 
-    if (value.title === "") return;
-    setSlug(slugify(value.title));
+
+    // Simplified below with a Ternary below 
+    // if (value.title === "") {
+    //   return;
+    // 
+    // } else {
+    //   setSlug(slugify(value.title));
+    // }
+    
+    (value.title === "") ? console.log("") : setSlug(slugify(value.title));
+
+
+
+
+
   }, [value]);
 
   const handleInputChange = (event) => {
     const target = event.target;
-    const val = target.type === "checkbox" ? target.checked : target.value;
+    const val = target.value;
     const name = target.name;
-    setValue({
+
+    console.log(event.target.value)
+
+
+
+    setValue(
+      {
       ...value,
       [name]: val,
     });
@@ -48,7 +86,9 @@ export default function MultilineTextFields() {
     if (editorRef.current) {
       console.log();
       const contentData = editorRef.current.getContent();
-      const data = { ...value, contentData, slug };
+      const data = { ...value, contentData:contentData, slug:slug };
+
+  
 
       alert(`${JSON.stringify(data)}`);
     }

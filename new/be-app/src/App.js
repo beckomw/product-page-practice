@@ -137,9 +137,14 @@ export default function MultilineTextFields() {
           />
         </div>
       </FormControl>
-      <FormControl style={{ width: "20%" }}>
+
+
+ 
+
+
+      <FormControl  style={{ width: "20%" }}>
         <InputLabel id="city-label">City</InputLabel>
-        <Select
+        <Select class="right"
           labelId="city"
           name="city"
           value={value.city}
@@ -153,7 +158,7 @@ export default function MultilineTextFields() {
         </Select>
       </FormControl>
 
-      <FormControl style={{ width: "20%" }}>
+      <FormControl  style={{ width: "20%" }}>
         <InputLabel id="post-type-label">Post Type</InputLabel>
         <Select
           labelId="postType"
@@ -170,7 +175,7 @@ export default function MultilineTextFields() {
         </Select>
       </FormControl>
 
-      <FormControl style={{ width: "20%" }}>
+      <FormControl  style={{ width: "20%" }}>
         <InputLabel id="category-label">Category</InputLabel>
         <Select
           labelId="category"
@@ -185,6 +190,10 @@ export default function MultilineTextFields() {
           <MenuItem value={"Italian"}>Italian</MenuItem>
         </Select>
       </FormControl>
+
+ 
+
+
       <FormControl style={{ width: "80%", height: 300 }}>
         <Editor
           apiKey={config.APIKEY}
